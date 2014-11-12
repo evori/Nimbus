@@ -35,7 +35,7 @@ Pod::Spec.new do |s|
 
 
 
-  s.source   = { :git => 'https://github.com/jverkoey/nimbus.git', :tag => ‘1.2.0’ }
+  s.source   = { :git => 'https://github.com/jverkoey/nimbus.git', :tag => '1.2.0' }
 
 
 
