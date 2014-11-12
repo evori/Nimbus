@@ -176,30 +176,6 @@
   [self networkImageViewDidFailWithError:error];
 }
 
-#pragma mark - NIOperationDelegate
-
-
-- (void)nimbusOperationDidStart:(NIOperation *)operation {
-  [self _didStartLoading];
-}
-
-- (void)nimbusOperationDidFinish:(NIOperation<NINetworkImageOperation> *)operation {
-  if (operation.isCancelled || operation != self.operation) {
-    return;
-  }
-  [self _didFinishLoadingWithImage:operation.imageCroppedAndSizedForDisplay
-                   cacheIdentifier:operation.cacheIdentifier
-                       displaySize:operation.imageDisplaySize
-                          cropRect:operation.imageCropRect
-                       contentMode:operation.imageContentMode
-                      scaleOptions:operation.scaleOptions
-                    expirationDate:[self expirationDate]];
-}
-
-- (void)nimbusOperationDidFail:(NIOperation *)operation withError:(NSError *)error {
-  [self _didFailToLoadWithError:error];
-}
-
 #pragma mark - Subclassing
 
 
@@ -367,62 +343,6 @@
 
       [self _didStartLoading];
       [self.networkOperationQueue addOperation:requestOperation];
-    }
-  }
-}
-
-- (void)setNetworkImageOperation:(NIOperation<NINetworkImageOperation> *)operation forDisplaySize:(CGSize)displaySize contentMode:(UIViewContentMode)contentMode cropRect:(CGRect)cropRect {
-  [self cancelOperation];
-
-  if (nil != operation) {
-    // We explicitly do not allow negative display sizes. Check the call stack to figure
-    // out who is providing a negative display size. It's possible that displaySize is an
-    // uninitialized CGSize structure.
-    NIDASSERT(displaySize.width >= 0);
-    NIDASSERT(displaySize.height >= 0);
-
-    // If an invalid display size IS provided, use the image view's frame instead.
-    if (0 >= displaySize.width || 0 >= displaySize.height) {
-      displaySize = self.frame.size;
-    }
-
-    UIImage* image = nil;
-
-    // Attempt to load the image from memory first.
-    if (nil != self.imageMemoryCache) {
-      NSString* cacheKey = [self cacheKeyForCacheIdentifier:operation.cacheIdentifier
-                                                  imageSize:displaySize
-                                                   cropRect:cropRect
-                                                contentMode:contentMode
-                                               scaleOptions:self.scaleOptions];
-      image = [self.imageMemoryCache objectWithName:cacheKey];
-    }
-
-    if (nil != image) {
-      // We successfully loaded the image from memory.
-      [self setImage:image];
-
-      if ([self.delegate respondsToSelector:@selector(networkImageView:didLoadImage:)]) {
-        [self.delegate networkImageView:self didLoadImage:self.image];
-      }
-
-      [self networkImageViewDidLoadImage:image];
-
-    } else {
-      // Unable to load the image from memory, so let's fire off the operation now.
-      operation.delegate = self;
-
-      operation.imageCropRect = cropRect;
-      operation.scaleOptions = self.scaleOptions;
-      operation.interpolationQuality = self.interpolationQuality;
-      if (self.sizeForDisplay) {
-        operation.imageDisplaySize = displaySize;
-        operation.imageContentMode = contentMode;
-      }
-
-      self.operation = operation;
-
-      [self.networkOperationQueue addOperation:self.operation];
     }
   }
 }

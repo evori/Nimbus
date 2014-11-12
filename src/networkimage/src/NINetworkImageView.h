@@ -45,21 +45,6 @@ typedef enum {
 } NINetworkImageViewScaleOptions;
 
 /**
- * A protocol defining the set of characteristics for an operation to be used with
- * NINetworkImageView.
- */
-@protocol NINetworkImageOperation <NSObject>
-@required
-@property (readonly, copy) NSString* cacheIdentifier;
-@property (assign) CGRect imageCropRect;
-@property (assign) CGSize imageDisplaySize;
-@property (assign) NINetworkImageViewScaleOptions scaleOptions;
-@property (assign) CGInterpolationQuality interpolationQuality;
-@property (assign) UIViewContentMode imageContentMode;
-@property (strong) UIImage* imageCroppedAndSizedForDisplay;
-@end
-
-/**
  * A network-enabled image view that consumes minimal amounts of memory.
  *
  * Intelligently crops and resizes images for optimal memory use and uses threads to avoid
@@ -95,8 +80,6 @@ typedef enum {
 - (void)setPathToNetworkImage:(NSString *)pathToNetworkImage forDisplaySize:(CGSize)displaySize contentMode:(UIViewContentMode)contentMode cropRect:(CGRect)cropRect;
 - (void)setPathToNetworkImage:(NSString *)pathToNetworkImage cropRect:(CGRect)cropRect;
 - (void)setPathToNetworkImage:(NSString *)pathToNetworkImage contentMode:(UIViewContentMode)contentMode;
-
-- (void)setNetworkImageOperation:(NIOperation<NINetworkImageOperation> *)operation forDisplaySize:(CGSize)displaySize contentMode:(UIViewContentMode)contentMode cropRect:(CGRect)cropRect;
 
 #pragma mark State
 
