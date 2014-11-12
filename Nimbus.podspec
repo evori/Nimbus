@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   s.name     = 'Nimbus'
 
-  s.version  = ‘1.2.0’
+  s.version  = '1.2.0'
 
   s.license  = 'Apache License, Version 2.0'
 
@@ -51,7 +51,7 @@ Pod::Spec.new do |s|
 
 
 
-  s.platform = :ios, ‘6.0’
+  s.platform = :ios, '6.0'
 
 
 
@@ -67,7 +67,7 @@ Pod::Spec.new do |s|
 
   end
 
-  s.subspec ‘Textfield’ do |textfield|
+  s.subspec 'Textfield' do |textfield|
 
     textfield.source_files = 'src/textfield/src'
 
@@ -84,7 +84,7 @@ Pod::Spec.new do |s|
   end
 
   
-  s.subspec ‘Collections’ do |collections|
+  s.subspec 'Collections' do |collections|
 
     collections.source_files = 'src/collections/src'
 
@@ -99,7 +99,7 @@ Pod::Spec.new do |s|
 
     css.dependency 'Nimbus/Core'
 
-    css.dependency 'Nimbus/Textfield’
+    css.dependency 'Nimbus/Textfield'
 
     css.dependency 'AFNetworking'
 
@@ -131,7 +131,7 @@ Pod::Spec.new do |s|
 
     interapp.dependency 'Nimbus/Core'
 
-    interapp.framework    = 'CoreLocation’
+    interapp.framework    = 'CoreLocation'
 
   end
 
@@ -144,7 +144,7 @@ Pod::Spec.new do |s|
 
     launcher.dependency 'Nimbus/Core'
 
-    launcher.dependency 'Nimbus/PagingScrollView’
+    launcher.dependency 'Nimbus/PagingScrollView'
 
     launcher.framework = 'CoreGraphics'
 
@@ -196,7 +196,7 @@ Pod::Spec.new do |s|
 
     overview.dependency 'Nimbus/Core'
 
-    overview.dependency 'Nimbus/Models’
+    overview.dependency 'Nimbus/Models'
 
   end
 
